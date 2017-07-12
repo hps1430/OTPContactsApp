@@ -61,7 +61,7 @@ public class DatabaseHelper_Adapter {
 
 
 
-            String row = cname.toUpperCase()+"\t\t\t"+c_otp_date+"\n"+"\tOTP : "+c_otp;
+            String row = cname.toUpperCase()+"\t\t\t"+c_otp_date+"\n"+"OTP : "+c_otp;
 
 
 
