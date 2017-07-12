@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Created by harsh singh on 12-07-2017.
@@ -60,7 +61,7 @@ public class DatabaseHelper_Adapter {
 
 
 
-            String row = cname.toUpperCase()+"\t"+c_otp_date+"\t"+c_otp;
+            String row = cname.toUpperCase()+"\t\t\t"+c_otp_date+"\n"+"\tOTP : "+c_otp;
 
 
 
@@ -72,7 +73,10 @@ public class DatabaseHelper_Adapter {
 
         db.close();
         cursor.close();
-        return data;
+
+        Collections.reverse(data);         //reversing the list of transactions for getting descending list of .
+
+         return data;
 
     }
 

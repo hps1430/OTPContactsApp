@@ -23,8 +23,8 @@ public class RandomiseOTP {
 
         Random random = new Random();
 
-        int range1 = (10-1)+1;
-        int range2 = (10-0)+1;
+        int range1 = (9-1)+1;
+        int range2 = (9-0)+1;
 
         int random_dig1 = random.nextInt(range1)+1;
 
