@@ -1,9 +1,12 @@
 package in.harsh.otpcontactsapp;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import java.util.ArrayList;
 
 /**
  * Created by harsh singh on 12-07-2017.
@@ -21,6 +24,60 @@ public class DatabaseHelper_Adapter {
 
 
     }
+
+
+    public ArrayList<String> getallLogs() {
+
+        ArrayList<String> data = new ArrayList<String>();
+        String[] col = {database_important.Field_Logid,
+                database_important.Field_ContactName,
+                database_important.Field_OTP,
+                database_important.Field_OTP_creation_date
+        };
+
+        SQLiteDatabase db = database_imp.getReadableDatabase();
+        Cursor cursor = db.query(database_important.Table_Name_LOGS,col,null,null,null,null,database_important.Field_OTP_creation_date);
+
+
+        if (cursor!=null) {
+            cursor.move(0);
+
+        }
+        while (cursor.moveToNext()) {
+
+            int index_Contact_name = cursor.getColumnIndex(database_important.Field_ContactName);
+            int index_OTP = cursor.getColumnIndex(database_important.Field_OTP);
+
+            int index_OTP_creation_date = cursor.getColumnIndex(database_important.Field_OTP_creation_date);
+
+
+            String cname = cursor.getString(index_Contact_name);
+
+            String c_otp_date = cursor.getString(index_OTP_creation_date);
+
+            String c_otp = cursor.getString(index_OTP);
+
+
+
+            String row = cname.toUpperCase()+"\t"+c_otp_date+"\t"+c_otp;
+
+
+
+
+            data.add(row);
+
+
+        }
+
+        db.close();
+        cursor.close();
+        return data;
+
+    }
+
+
+
+
 
 
     static class database_important extends SQLiteOpenHelper {
