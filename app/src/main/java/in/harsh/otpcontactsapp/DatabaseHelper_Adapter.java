@@ -1,5 +1,6 @@
 package in.harsh.otpcontactsapp;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
@@ -77,6 +78,42 @@ public class DatabaseHelper_Adapter {
 
 
 
+    public long add_logEntry(String contact_name,String OTP_time,String otp,String mobileno) {
+
+
+        SQLiteDatabase db = database_imp.getWritableDatabase();
+
+
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(database_important.Field_ContactName, contact_name);
+        contentValues.put(database_important.Field_OTP, otp);
+        contentValues.put(database_important.Field_OTP_creation_date, OTP_time);
+        contentValues.put(database_important.Field_Mobileno, mobileno);
+
+
+
+        long id = 0;
+        try {
+            id = db.insert(database_important.Table_Name_LOGS, database_important.Field_OTP,contentValues);
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+        }
+
+
+        db.close();
+
+        return id;
+
+    }
+
+
+
+
+
+
 
 
 
@@ -91,7 +128,7 @@ public class DatabaseHelper_Adapter {
         private static final String Field_ContactName = "contact_name";
         private static final String Field_OTP_creation_date = "OTP_creation_date";
         private static final String Field_OTP = "OTP";
-
+        private static final String Field_Mobileno = "Mobileno";
 
 
 
@@ -107,6 +144,7 @@ public class DatabaseHelper_Adapter {
         String create_logs ="CREATE TABLE IF NOT EXISTS " + Table_Name_LOGS + "(" +Field_Logid+" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,"
                 +Field_ContactName+ " TEXT,"
                 +Field_OTP+ " TEXT,"
+                +Field_Mobileno+ " TEXT,"
                 +Field_OTP_creation_date+ " TEXT);";
 
 

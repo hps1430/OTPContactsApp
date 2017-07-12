@@ -15,6 +15,10 @@ import android.support.v7.widget.Toolbar;
 
 public class MainActivity extends AppCompatActivity {
 
+
+    DatabaseHelper_Adapter database_important;
+
+
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -38,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
+
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.INTERNET)
                 != PackageManager.PERMISSION_GRANTED) {
             // Check Permissions Now
@@ -53,11 +59,21 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
-
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+
+
+
+
+        database_important = new DatabaseHelper_Adapter(this);
+
+
+
+
+
+
+
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());

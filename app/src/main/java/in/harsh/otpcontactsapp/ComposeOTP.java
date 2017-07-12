@@ -25,13 +25,21 @@ public class ComposeOTP extends AppCompatActivity {
 
     RandomiseOTP randomiseOTP;
 
+    DatabaseHelper_Adapter databaseHelper_adapter;
+
 
     String mobileno,body_initial,otp,body,twilio_heroku_url;
+    String contact_name , OTP_time;
+
+    CurrentTime currentTime;
+
     private OkHttpClient mClient = new OkHttpClient();
 
     EditText message_edit;
 
     Button sendotp,refreshotp;
+
+
 
 
 
@@ -41,17 +49,35 @@ public class ComposeOTP extends AppCompatActivity {
         setContentView(R.layout.activity_compose_otp);
 
 
+        databaseHelper_adapter = new DatabaseHelper_Adapter(this);
+
+        twilio_heroku_url = "https://harshtwiliosmsbackend.herokuapp.com/";
+
+        body_initial="Hi. Your OTP is: ";
+
+
+
+        //collecting all the shared preferences
+
         SharedPreferences sharedPreferences =   getSharedPreferences("activefile", Context.MODE_PRIVATE);
+        mobileno = sharedPreferences.getString("active_mobile"," ");
+
+        contact_name = sharedPreferences.getString("active_firstname"," ")+" "+sharedPreferences.getString("active_lastname"," ");
+
         mobileno = sharedPreferences.getString("active_mobile"," ");
 
 
 
-        twilio_heroku_url = "https://harshtwiliosmsbackend.herokuapp.com/";
 
 
 
 
-        body_initial="Hi. Your OTP is: ";
+
+
+
+
+
+        // Now getting random OTP
 
         randomiseOTP = new RandomiseOTP();
 
@@ -65,19 +91,6 @@ public class ComposeOTP extends AppCompatActivity {
         message_edit.setEnabled(false);
         message_edit.setClickable(true);
         message_edit.setText(body);
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -113,6 +126,26 @@ public class ComposeOTP extends AppCompatActivity {
                                 @Override
                                 public void run() {
                                     Toast.makeText(getApplicationContext(), "SMS Sent!!", Toast.LENGTH_LONG).show();
+
+                                    currentTime = new CurrentTime(ComposeOTP.this);
+                                    OTP_time = currentTime.getdatetimeFormat().toString();
+
+
+                                    long id = databaseHelper_adapter.add_logEntry(contact_name,OTP_time,otp,mobileno);
+
+                                    if(id<0)
+                                    {
+                                        Toast.makeText(getApplicationContext(), "Log addition failed!!", Toast.LENGTH_LONG).show();
+
+                                    }
+                                    else if (id>0)
+                                    {
+
+
+                                    }
+
+
+
 
                                     Intent intent = new Intent(ComposeOTP.this, MainActivity.class);
                                     startActivity(intent);
