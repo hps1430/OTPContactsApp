@@ -51,7 +51,7 @@ public class ComposeOTP extends AppCompatActivity {
 
         databaseHelper_adapter = new DatabaseHelper_Adapter(this);
 
-        twilio_heroku_url = "https://harshtwiliosmsbackend.herokuapp.com/";
+        twilio_heroku_url = "https://harshtwiliosmsbackend.herokuapp.com";
 
         body_initial="Hi. Your OTP is: ";
 
@@ -121,10 +121,11 @@ public class ComposeOTP extends AppCompatActivity {
                         }
 
                         @Override
-                        public void onResponse(Call call, Response response) throws IOException {
+                        public void onResponse(Call call, final Response response) throws IOException {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
+                                   Toast.makeText(getApplicationContext(),response.toString(),Toast.LENGTH_LONG).show();
                                     Toast.makeText(getApplicationContext(), "SMS Sent!!", Toast.LENGTH_LONG).show();
 
                                     currentTime = new CurrentTime(ComposeOTP.this);
